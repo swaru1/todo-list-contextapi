@@ -8,11 +8,9 @@ const List = ({elem}) => {
   
   const handleDelete = () => {
     let filteredArr = allTasks.filter((val)=> val.id !== elem.id)
-    console.log(filteredArr);
     localStorage.setItem("tasks", JSON.stringify(filteredArr))
     setAllTasks(filteredArr)
   }
-
 
   return (
     <div className="bg-white border border-gray-300 rounded-md p-2 flex gap-6 items-center justify-between">
