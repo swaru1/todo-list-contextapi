@@ -1,18 +1,38 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../context/ContextProvider";
 import { nanoid } from "nanoid";
 
 const Inputbar = () => {
 
-  let {allTasks, setAllTasks} = useContext(MyContext) //1. input gets access to global state
+  let {allTasks, setAllTasks, editedId, setEditedId} = useContext(MyContext) //1. input gets access to global state
  
   const [taskInp, setTaskInp] = useState('');
+
+  useEffect(()=> {
+    if(editedId) {
+      let findUpdatedValue = allTasks.find((val) => val.id === editedId) || "";
+      setTaskInp(findUpdatedValue.task);
+    }
+  },[editedId]);
+
 
   const handleSubmit = (e)=> {
     e.preventDefault();
 
     if (taskInp === "") {
       return;  //input is blank
+    }
+
+    if(editedId) {
+      let updatedTask = allTasks.find((elem)=> elem.id === editedId);
+      updatedTask.task = taskInp;
+
+      let upArr = [...allTasks];
+      setAllTasks(upArr);
+      localStorage.setItem("tasks", JSON.stringify(upArr));
+      setTaskInp("");
+      setEditedId(null);
+      return;
     }
 
     let updatedArr = [
@@ -37,11 +57,19 @@ const Inputbar = () => {
           type="text"
           className="border-2 focus:border-blue-400 outline-none py-1.5 px-2.5 rounded-md w-[50%]"
         />
-        <input
+        {editedId ? (
+          <input
+          type="submit"
+          value="update"
+          className="text-white bg-blue-400 hover:bg-blue-500 active:scale-95 py-1.5 px-2.5 rounded-md cursor-pointer"
+        />
+        ) : (
+          <input
           type="submit"
           value="add Task"
           className="text-white bg-blue-400 hover:bg-blue-500 active:scale-95 py-1.5 px-2.5 rounded-md cursor-pointer"
         />
+        )}
       </form>
     </div>
   );
