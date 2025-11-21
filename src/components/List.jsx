@@ -6,6 +6,12 @@ const List = ({elem}) => {
 
   let {allTasks, setAllTasks} = useContext(MyContext)
   
+  const handleDelete = () => {
+    let filteredArr = allTasks.filter((val)=> val.id !== elem.id)
+    console.log(filteredArr);
+    localStorage.setItem("tasks", JSON.stringify(filteredArr))
+    setAllTasks(filteredArr)
+  }
 
 
   return (
@@ -17,7 +23,7 @@ const List = ({elem}) => {
         <button className="py-1.5 px-2.5 bg-green-300 text-white font-semibold cursor-pointer active:scale-95 hover:bg-green-400">
           update
         </button>
-        <button  className="py-1.5 px-2.5 bg-red-500 text-white font-semibold cursor-pointer active:scale-95 hover:bg-red-600">
+        <button onClick={handleDelete} className="py-1.5 px-2.5 bg-red-500 text-white font-semibold cursor-pointer active:scale-95 hover:bg-red-600">
           remove
         </button>
       </div>
