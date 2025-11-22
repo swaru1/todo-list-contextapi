@@ -1,17 +1,45 @@
 import { useContext, useState } from "react";
 import { TaskContext } from "../context/Context";
+import { nanoid } from "nanoid";
 
 
 const Inputbar = () => {
-  //using the context and destrc the value object
+  // Accessing context values (tasks array + updater function)
+  // We destructure the object passed from TaskContextProvider
   let {allTasks, setAllTasks} = useContext(TaskContext);
   
+  // Local input state to control the input field
   const [taskInp, setTaskInp] = useState("");
   
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form submit");
+
+    //cast 1 : input is blank
+    if(taskInp === "") {
+      console.log("empty form not submited");
+      return
+    };
+
+    // Create a NEW updated array of tasks
+    // We copy old tasks (...allTasks)
+    // Then add one new task object (id + task text)
+    let updatedArr = [
+      ...allTasks, 
+      {
+        id: nanoid(), 
+        task: taskInp
+      }
+    ]
+
+    
+    setAllTasks(updatedArr);    // Update the context state (this re-renders UI)
+    
+    // Save the updated tasks in localStorage to persist across refreshes
+    localStorage.setItem("tasks", JSON.stringify(updatedArr));
+    setTaskInp("");
+
+    console.log("form submited", "input:", taskInp);
   }
 
   return (
