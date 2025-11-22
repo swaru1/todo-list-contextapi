@@ -8,7 +8,7 @@ const Taskcontainer = () => {
   let {allTasks} = useContext(TaskContext);
 
   return (
-    <div className='bg-gray-100 h-full border-2 border-dashed rounded-xl flex flex-col gap-1 p-2'>
+    <div className='bg-gray-100 h-full border-2 border-dashed rounded-xl flex flex-col gap-1 p-2 overflow-y-auto'>
         {
           allTasks?.map((elem) => {
             return <List key={elem.id} elem={elem} />

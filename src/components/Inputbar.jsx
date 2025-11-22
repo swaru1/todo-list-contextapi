@@ -23,7 +23,7 @@ const Inputbar = () => {
 
     //cast 1 : input is blank
     if (taskInp === "") {
-      console.log("empty form not submited");
+      alert("empty form! not submited");
       return;
     }
 
@@ -66,7 +66,7 @@ const Inputbar = () => {
     localStorage.setItem("tasks", JSON.stringify(updatedArr));
     setTaskInp("");
 
-    console.log("form submited", "input:", taskInp);
+    //console.log("form submited", "input:", taskInp);
   };
 
   return (
