@@ -3,15 +3,16 @@ import { TaskContext } from "../context/Context";
 
 const List = ({elem}) => {  
 
-  let {allTasks, setAllTasks} = useContext(TaskContext)
+  let {allTasks, setAllTasks, setEditedId } = useContext(TaskContext)
 
   const handleDelete = ()=> {
-
     let filterArr = allTasks.filter((val) => val.id !== elem.id);
     localStorage.setItem("tasks", JSON.stringify(filterArr));
     setAllTasks(filterArr);
+  }
 
-    console.log("deleted:", elem.task );
+  const handleUpdate = () => {
+    setEditedId(elem.id);
   }
 
 
@@ -21,7 +22,7 @@ const List = ({elem}) => {
         {elem.task}
       </p>
       <div className="controls flex gap-2 *:rounded-md">
-        <button  className="py-1.5 px-2.5 bg-green-300 text-white font-semibold cursor-pointer active:scale-95 hover:bg-green-400">
+        <button onClick={handleUpdate}  className="py-1.5 px-2.5 bg-green-300 text-white font-semibold cursor-pointer active:scale-95 hover:bg-green-400">
           Update
         </button>
         <button onClick={handleDelete}  className="py-1.5 px-2.5 bg-red-500 text-white font-semibold cursor-pointer active:scale-95 hover:bg-red-600">
