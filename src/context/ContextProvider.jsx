@@ -12,10 +12,12 @@ const TaskContextProvider = ({children})=> {
         return JSON.parse(localStorage.getItem("tasks")) || [];
     })
 
+    const [editedId, setEditedId] = useState(null);
+
 
     return (
         // Passing both values inside an object
-        <TaskContext.Provider value={{allTasks, setAllTasks}}>
+        <TaskContext.Provider value={{allTasks, setAllTasks, editedId, setEditedId}}>
             {children}
         </TaskContext.Provider>
     )
