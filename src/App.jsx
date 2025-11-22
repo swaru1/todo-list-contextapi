@@ -13,7 +13,6 @@ const App = () => {
     </div>
   );
 
-  //step-3 just render Ui
 };
 
 export default App;
